@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_ctrl.dart';
 
-class Detail extends StatelessWidget {
-  const Detail({super.key, required this.id});
+class UserDetail extends StatelessWidget {
+  const UserDetail({super.key, required this.id});
   final String id;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Detail Produk'),
+          title: const Text('Detail'),
         ),
         body: Center(
           child: FutureBuilder(
@@ -19,8 +19,10 @@ class Detail extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(snapshot.data!.data()!['nama']),
-                      Text(snapshot.data!.data()!['stok'].toString()),
+                      Text(snapshot.data!.namabarang),
+                      Text(
+                        snapshot.data!.harga.toString(),
+                      ),
                     ],
                   ),
                 );

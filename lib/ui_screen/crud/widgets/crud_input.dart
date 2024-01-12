@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_ctrl.dart';
+import 'package:nadhilah_fb/ui_screen/crud/crud_data.dart';
+import 'package:nadhilah_fb/ui_screen/crud/widgets/user.dart';
 
-class Input extends StatefulWidget {
-  const Input({super.key});
+class UserInput extends StatefulWidget {
+  const UserInput({super.key});
 
   @override
-  State<Input> createState() => _InputState();
+  State<UserInput> createState() => _UserInputState();
 }
 
-class _InputState extends State<Input> {
-  final ctrlnama = TextEditingController();
-  final ctrlstok = TextEditingController();
-  var isLoading = false;
-  var isShowClearnama = false;
-  var isShowClearumur = false;
-
+class _UserInputState extends State<UserInput> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Input Barang'),
+          title: const Text('User Input'),
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -36,26 +32,27 @@ class _InputState extends State<Input> {
                   );
                 },
                 decoration: InputDecoration(
-                  suffixIcon: isShowClearnama
-                      ? IconButton(
-                          onPressed: () {
-                            ctrlnama.clear();
-                            setState(
-                              () {
-                                isShowClearnama = false;
-                              },
-                            );
-                          },
-                          icon: const Icon(Icons.clear),
-                        )
-                      : null,
-                  border: const OutlineInputBorder(),
-                  hintText: 'nama',
-                ),
+                    suffixIcon: isShowClearnama
+                        ? IconButton(
+                            onPressed: () {
+                              ctrlnama.clear();
+                              setState(
+                                () {
+                                  isShowClearnama = false;
+                                },
+                              );
+                            },
+                            icon: const Icon(Icons.clear),
+                          )
+                        : null,
+                    border: const OutlineInputBorder(),
+                    hintText: 'nama',
+                    labelText: 'Nama',
+                    prefix: const Icon(Icons.person)),
               ),
               const SizedBox(height: 10),
               TextField(
-                controller: ctrlstok,
+                controller: ctrlharga,
                 onChanged: (value) {
                   setState(() {
                     isShowClearumur = value.isNotEmpty;
@@ -65,7 +62,7 @@ class _InputState extends State<Input> {
                   suffixIcon: isShowClearumur
                       ? IconButton(
                           onPressed: () {
-                            ctrlstok.clear();
+                            ctrlharga.clear();
                             setState(
                               () {
                                 isShowClearumur = false;
@@ -76,7 +73,8 @@ class _InputState extends State<Input> {
                         )
                       : null,
                   border: const OutlineInputBorder(),
-                  hintText: 'stok',
+                  hintText: 'Harga',
+                  labelText: 'Harga',
                 ),
               ),
               const SizedBox(
@@ -97,22 +95,26 @@ class _InputState extends State<Input> {
                   ),
                   OutlinedButton(
                     onPressed: () async {
-                      var x = ctrlnama.text;
-                      var y = int.parse(ctrlstok.text);
-                      var z = ({'nama': x, 'stok': y});
+                      var valNamaBarang = ctrlnama.text;
+                      var valHarga = int.parse(ctrlharga.text);
+                      final id = UniqueKey().toString();
+                      final newUser = UserX(
+                          id: id, namabarang: valNamaBarang, harga: valHarga, createdAt: DateTime.now().toString());
+
+                      // var z = ({'nama': x, 'umur': y});
                       setState(
                         () {
                           isLoading = true;
                         },
                       );
-                      await create(z);
+                      await create(newUser);
                       setState(
                         () {
                           isLoading = false;
                         },
                       );
                       ctrlnama.clear();
-                      ctrlstok.clear();
+                      ctrlharga.clear();
                       Navigator.pop(context);
 
                       // debugPrint(x.runtimeType.toString());

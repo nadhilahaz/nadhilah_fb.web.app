@@ -1,8 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:math';
+
+import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
-import 'package:nadhilah_fb/ui_screen/auth/widgets/auth_view.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_ctrl.dart';
+import 'package:nadhilah_fb/ui_screen/crud/crud_data.dart';
 import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_detail.dart';
+import 'package:nadhilah_fb/ui_screen/crud/widgets/user.dart';
 
 class CrudViewUser extends StatefulWidget {
   const CrudViewUser({
@@ -13,77 +16,120 @@ class CrudViewUser extends StatefulWidget {
   State<CrudViewUser> createState() => _CrudViewUserState();
 }
 
-var selectedId = '';
-
 class _CrudViewUserState extends State<CrudViewUser> {
+  @override
+  void initState() {
+    final x = UserX(
+      createdAt: '9999-99-99',
+      namabarang: 'nad',
+      id: 'sjhsa',
+      harga: 17,
+    );
+    print(x);
+    // print('hihiw');
+    // final y = x.copyWith(
+    //   umur: 22,
+    //   nama: 'kk',
+    // );
+    // print(y);
+    loadMore();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Daftar Produk'),
-        actions: [
-          IconButton(
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const AuthView(),
-                ),
-              );
-            },
-            icon: const Icon(Icons.exit_to_app),
-          ),
-        ],
+        title: const Text('Daftar Barang'),
       ),
-      body: Center(
-        child: FutureBuilder(
-          future: getcoll(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            if (snapshot.hasData) {
-              if (snapshot.data!.docs.isEmpty) {
-                return const Text('Empty');
-              }
-            }
-            if (snapshot.hasData) {
-              return Column(
+      body: FutureBuilder(
+        future: getcoll(),
+        builder: (context, snapshot) {
+          // if (snapshot.connectionState == ConnectionState.waiting) {
+          //   return const Center(child: CircularProgressIndicator());
+          // }
+
+          if (snapshot.hasData) {
+            return SingleChildScrollView(
+              child: Column(
                 children: [
-                  ...List.generate(snapshot.data!.docs.length, (index) {
-                    final data = snapshot.data!.docs[index];
-                    final id = data.id;
-                    return Card(
-                      child: ListTile(
-                        selectedTileColor: const Color.fromARGB(255, 0, 23, 108),
-                        selected: selectedId == id,
-                        onTap: () {
-                          setState(() {
-                            selectedId = id;
-                          });
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Detail(
-                                id: id,
+                  ...List.generate(
+                    userList.length,
+                    (index) {
+                      final data = userList[index];
+                      final id = data.id;
+                      return Card(
+                        child: ListTile(
+                          selectedTileColor: const Color.fromARGB(255, 54, 31, 5),
+                          selected: selectedId == id,
+                          onTap: () {
+                            setState(
+                              () {
+                                selectedId = id;
+                              },
+                            );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => UserDetail(
+                                  id: id,
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                        title: Text(
-                          data.data()['nama'],
+                            );
+                          },
+                          title: Text(data.namabarang),
+                          subtitle: Text(data.createdAt),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                onPressed: () async {
+                                  await delete(data);
+                                  setState(() {});
+                                },
+                                icon: const Icon(Icons.delete),
+                              ),
+                              IconButton(
+                                onPressed: () async {
+                                  final updateUser = data.copyWith(
+                                    harga: Random().nextInt(100),
+                                    namabarang: WordPair.random().toString(),
+                                  );
+                                  // final updateUser = UserX(
+                                  //   id: id,
+                                  // umur: Random().nextInt(100),
+                                  // createdAt: data.createdAt,
+                                  // nama: WordPair.random().toString(),
+                                  // );
+                                  await update(updateUser);
+                                  setState(() {});
+                                },
+                                icon: const Icon(Icons.loop),
+                              ),
+                            ],
+                          ),
                         ),
-                        subtitle: Text(id),
-                      ),
-                    );
-                  })
+                      );
+                    },
+                  ),
+                  isEnd
+                      ? const Text('End Of List')
+                      : snapshot.connectionState == ConnectionState.waiting
+                          ? const CircularProgressIndicator()
+                          : OutlinedButton(
+                              onPressed: () {
+                                setState(() {
+                                  loadMore();
+                                });
+                              },
+                              child: const Text('Load More'),
+                            )
                 ],
-              );
-            }
-            return const Text('text');
-          },
-        ),
+              ),
+            );
+          }
+          return const Center(child: CircularProgressIndicator());
+        },
       ),
     );
   }

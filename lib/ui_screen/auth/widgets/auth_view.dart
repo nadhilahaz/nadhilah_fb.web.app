@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_viewadmin.dart';
 import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_viewuser.dart';
 
 class AuthView extends StatelessWidget {
@@ -70,6 +71,24 @@ class AuthView extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
+                  OutlinedButton(
+                    onPressed: snapshot.data == null
+                        ? () async {
+                            final provider = GoogleAuthProvider().setCustomParameters({'prompt': 'select_account'});
+
+                            await FirebaseAuth.instance.signInWithPopup(provider);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const CrudViewAdmin(),
+                              ),
+                            );
+                          }
+                        : null,
+                    child: const Text(
+                      "Sign In Admin",
+                    ),
+                  ),
                   // OutlinedButton(
                   //   onPressed: snapshot.data == null
                   //       ? null
@@ -80,7 +99,9 @@ class AuthView extends StatelessWidget {
                   //     "Sign Out",
                   //   ),
                   // ),
-
+                  const SizedBox(
+                    height: 20,
+                  ),
                   OutlinedButton(
                     onPressed: snapshot.data == null
                         ? null

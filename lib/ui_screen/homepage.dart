@@ -15,9 +15,9 @@ class LoginPage extends StatelessWidget {
           Center(
             child: MaterialButton(
               onPressed: () {
-                html.window.open('https://github.com/nadhilahaz/nadhilah-fb.web.app', 'new');
+                html.window.open('https://github.com/nadhilahaz/nadhilah_fb.web.app', 'new');
               },
-              splashColor: Colors.black,
+              // splashColor: Color.fromARGB(255, 22, 76, 148),
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               shape: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20),
@@ -26,7 +26,7 @@ class LoginPage extends StatelessWidget {
                 'Git Hub',
                 style: TextStyle(
                   fontWeight: FontWeight.w200,
-                  color: Colors.black,
+                  color: Color.fromARGB(255, 251, 246, 246),
                 ),
               ),
             ),

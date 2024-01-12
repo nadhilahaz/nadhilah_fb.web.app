@@ -1,20 +1,95 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:nadhilah_fb/ui_screen/crud/crud_data.dart';
+import 'package:nadhilah_fb/ui_screen/crud/widgets/user.dart';
 
-Future<void> create(Map<String, dynamic> data) async {
-  final docId = UniqueKey().toString();
-  var nama = data['nama'];
+Future<void> create(UserX data) async {
+  final dataDetail = data.toMap();
+  final docId = data.id;
+  // var nama = data.nama;
+  // final createdAt = data.createdAt;
+  final dataUserName = {
+    'nama': data.namabarang,
+    'id': data.id,
+    'created_at': data.createdAt,
+  };
 
-  await FirebaseFirestore.instance.collection('username').doc(docId).set({'nama': nama});
-  await FirebaseFirestore.instance.collection('detail').doc(docId).set(data);
+  await FirebaseFirestore.instance.collection('username').doc(docId).set(dataUserName);
+  await FirebaseFirestore.instance.collection('detail').doc(docId).set(dataDetail);
+  userList.insert(0, data);
 }
 
-Future<QuerySnapshot<Map<String, dynamic>>> getcoll() async {
-  final result = await FirebaseFirestore.instance.collection('username').get();
-  return result;
+Future<void> update(UserX data) async {
+  final dataDetail = data.toMap();
+  final docId = data.id;
+  // var nama = data.nama;
+  // final createdAt = data.createdAt;
+  final dataUserName = {
+    'nama': data.namabarang,
+    'id': data.id,
+    'created_at': data.createdAt,
+  };
+
+  await FirebaseFirestore.instance.collection('username').doc(docId).set(dataUserName);
+  await FirebaseFirestore.instance.collection('detail').doc(docId).set(dataDetail);
+  final index = userList.indexWhere((element) => element.id == docId);
+  userList[index] = data;
 }
 
-Future<DocumentSnapshot<Map<String, dynamic>>> getDoc(String id) async {
+Future<void> delete(UserX data) async {
+  final docId = data.id;
+  await FirebaseFirestore.instance.collection('username').doc(docId).delete();
+  await FirebaseFirestore.instance.collection('detail').doc(docId).delete();
+  final index = userList.indexWhere((element) => element.id == docId);
+  userList.removeAt(index);
+}
+
+// Future<QuerySnapshot<Map<String, dynamic>>> getcoll() async {
+//   final result = await FirebaseFirestore.instance.collection('username').get();
+//   return result;
+// }
+Future<List<UserX>> getcoll() async {
+  List<UserX> users = [];
+  // final result = await FirebaseFirestore.instance.collection('username').orderBy('created_at', descending: true).get();
+  final result =
+      // await FirebaseFirestore.instance.collection('username').orderBy('created_at', descending: true).limit(3).get();
+      await FirebaseFirestore.instance
+          .collection('username')
+          .orderBy('created_at', descending: true)
+          .limit(3)
+          .startAfter([userList.isEmpty ? '9999-99-99' : userList.last.createdAt]).get();
+  for (var element in result.docs) {
+    users.add(UserX.fromMap(element.data()));
+  }
+  return users;
+}
+// Future<List<UserX>> getcoll() async {
+//   List<UserX> users = [];
+//   final result = await FirebaseFirestore.instance.collection('username').get();
+//   for (var element in result.docs) {
+//     users.add(UserX.fromMap(element.data()));
+//   }
+//   return users;
+// }
+
+// Future<QuerySnapshot<Map<String, dynamic>>> getcoll() async {
+//   final result = await FirebaseFirestore.instance.collection('username').get();
+//   return result;
+// }
+
+Future<UserX> getDoc(String id) async {
   final result = await FirebaseFirestore.instance.collection('detail').doc(id).get();
-  return result;
+  final user = UserX.fromMap(result.data() ?? {});
+  return user;
+}
+
+// Future<DocumentSnapshot<Map<String, dynamic>>> getDoc(String id) async {
+//   final result = await FirebaseFirestore.instance.collection('detail').doc(id).get();
+//   return result;
+// }
+Future<void> loadMore() async {
+  final datacoll = await getcoll();
+  userList.addAll(datacoll);
+  if (datacoll.length < 3) {
+    isEnd = true;
+  }
 }
