@@ -8,7 +8,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 22, 103, 202),
+        backgroundColor: const Color.fromARGB(255, 26, 112, 217),
         title: const Text('HazMart'),
         actions: [
           Center(
