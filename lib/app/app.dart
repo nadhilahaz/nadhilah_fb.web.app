@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_viewuser.dart';
 import 'package:nadhilah_fb/ui_screen/homepage.dart';
 
 class MyApp extends StatelessWidget {
@@ -6,11 +7,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Material App',
-      theme: ThemeData.dark(),
+    return const MaterialApp(
+      // title: 'Material App',
+      // theme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
-      home: const HomePage(),
+      home: LoginPage(),
     );
   }
 }
