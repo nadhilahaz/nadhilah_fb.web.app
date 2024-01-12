@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "457458718791",
+    "project_id": "nadhilah-fb",
+    "storage_bucket": "nadhilah-fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:457458718791:android:89e060c069c9eaed6e3962",
+        "android_client_info": {
+          "package_name": "com.example.nadhilah_fb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "457458718791-ol0a41ih6ilepsjsp59vrutbosund1jg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANwFvANSyUol3wdi-ueB5xgQjOBG5h0zk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "457458718791-ol0a41ih6ilepsjsp59vrutbosund1jg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
