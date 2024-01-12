@@ -25,7 +25,7 @@ class HomePage extends StatelessWidget {
           children: [
             OutlinedButton(
               onPressed: () {
-                html.window.open('https://github.com/nadhilahaz/nadhilah-flutter', 'new');
+                html.window.open('https://github.com/nadhilahaz/nadhilah_fb.web.app', 'new');
               },
               child: const Text('Github'),
             ),
