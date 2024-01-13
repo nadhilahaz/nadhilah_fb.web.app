@@ -1,11 +1,10 @@
-import 'dart:math';
-
-import 'package:english_words/english_words.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:nadhilah_fb/models/user.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_ctrl.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_data.dart';
 import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_detail.dart';
-import 'package:nadhilah_fb/ui_screen/crud/widgets/user.dart';
+import 'package:nadhilah_fb/ui_screen/homepage.dart';
 
 class CrudViewUser extends StatefulWidget {
   const CrudViewUser({
@@ -21,7 +20,7 @@ class _CrudViewUserState extends State<CrudViewUser> {
   void initState() {
     final x = UserX(
       createdAt: '9999-99-99',
-      namabarang: 'nad',
+      namabarang: 'rinso',
       id: 'sjhsa',
       harga: 17,
     );
@@ -41,6 +40,19 @@ class _CrudViewUserState extends State<CrudViewUser> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Daftar Barang'),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LoginPage(),
+                  ));
+            },
+            icon: const Icon(Icons.exit_to_app),
+          ),
+        ],
       ),
       body: FutureBuilder(
         future: getcoll(),
@@ -79,33 +91,33 @@ class _CrudViewUserState extends State<CrudViewUser> {
                           },
                           title: Text(data.namabarang),
                           subtitle: Text(data.createdAt),
-                          trailing: Row(
+                          trailing: const Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              IconButton(
-                                onPressed: () async {
-                                  await delete(data);
-                                  setState(() {});
-                                },
-                                icon: const Icon(Icons.delete),
-                              ),
-                              IconButton(
-                                onPressed: () async {
-                                  final updateUser = data.copyWith(
-                                    harga: Random().nextInt(100),
-                                    namabarang: WordPair.random().toString(),
-                                  );
-                                  // final updateUser = UserX(
-                                  //   id: id,
-                                  // umur: Random().nextInt(100),
-                                  // createdAt: data.createdAt,
-                                  // nama: WordPair.random().toString(),
-                                  // );
-                                  await update(updateUser);
-                                  setState(() {});
-                                },
-                                icon: const Icon(Icons.loop),
-                              ),
+                              // IconButton(
+                              //   onPressed: () async {
+                              //     await delete(data);
+                              //     setState(() {});
+                              //   },
+                              //   icon: const Icon(Icons.delete),
+                              // ),
+                              // IconButton(
+                              //   onPressed: () async {
+                              //     final updateUser = data.copyWith(
+                              //       harga: Random().nextInt(100),
+                              //       namabarang: WordPair.random().toString(),
+                              //     );
+                              // final updateUser = UserX(
+                              //   id: id,
+                              // umur: Random().nextInt(100),
+                              // createdAt: data.createdAt,
+                              // nama: WordPair.random().toString(),
+                              // );
+                              //     await update(updateUser);
+                              //     setState(() {});
+                              //   },
+                              //   icon: const Icon(Icons.loop),
+                              // ),
                             ],
                           ),
                         ),

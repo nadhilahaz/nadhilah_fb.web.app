@@ -13,15 +13,15 @@ class UserX {
   });
 
   UserX copyWith({
-    String? namabarang,
+    String? nama,
     String? id,
-    int? harga,
+    int? umur,
     String? createdAt,
   }) {
     return UserX(
-      namabarang: namabarang ?? this.namabarang,
+      namabarang: nama ?? this.namabarang,
       id: id ?? this.id,
-      harga: harga ?? this.harga,
+      harga: umur ?? this.harga,
       createdAt: createdAt ?? this.createdAt,
     );
   }

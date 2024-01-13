@@ -1,12 +1,12 @@
-import 'dart:math';
+// import 'package:english_words/english_words.dart';
+// import 'dart:math';
 
-import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'package:nadhilah_fb/models/user.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_ctrl.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_data.dart';
 import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_detail.dart';
 import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_input.dart';
-import 'package:nadhilah_fb/ui_screen/crud/widgets/user.dart';
 
 class CrudViewAdmin extends StatefulWidget {
   const CrudViewAdmin({
@@ -24,7 +24,7 @@ class _CrudViewAdminState extends State<CrudViewAdmin> {
       createdAt: '9999-99-99',
       namabarang: 'nad',
       id: 'sjhsa',
-      harga: 17,
+      harga: 9999,
     );
     print(x);
     // print('hihiw');
@@ -41,7 +41,7 @@ class _CrudViewAdminState extends State<CrudViewAdmin> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Material App Bar'),
+        title: const Text('Daftar Barang'),
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -117,23 +117,31 @@ class _CrudViewAdminState extends State<CrudViewAdmin> {
                                 },
                                 icon: const Icon(Icons.delete),
                               ),
-                              IconButton(
-                                onPressed: () async {
-                                  final updateUser = data.copyWith(
-                                    harga: Random().nextInt(100),
-                                    namabarang: WordPair.random().toString(),
-                                  );
-                                  // final updateUser = UserX(
-                                  //   id: id,
-                                  // umur: Random().nextInt(100),
-                                  // createdAt: data.createdAt,
-                                  // nama: WordPair.random().toString(),
-                                  // );
-                                  await update(updateUser);
-                                  setState(() {});
-                                },
-                                icon: const Icon(Icons.loop),
-                              ),
+                              // IconButton(
+                              //   onPressed: () async {
+                              //     final updateUser = data.copyWith(
+
+                              //     );
+                              //   },
+                              //   icon: const Icon(Icons.loop),
+                              // ),
+                              // IconButton(
+                              //   onPressed: () async {
+                              //     final updateUser = data.copyWith(
+                              //       harga: Random().nextInt(100),
+                              //       namabarang: WordPair.random().toString(),
+                              //     );
+                              //     // final updateUser = UserX(
+                              //     //   id: id,
+                              //     // umur: Random().nextInt(100),
+                              //     // createdAt: data.createdAt,
+                              //     // nama: WordPair.random().toString(),
+                              //     // );
+                              //     await update(updateUser);
+                              //     setState(() {});
+                              //   },
+                              //   icon: const Icon(Icons.loop),
+                              // ),
                             ],
                           ),
                         ),

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:nadhilah_fb/models/user.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_ctrl.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_data.dart';
-import 'package:nadhilah_fb/ui_screen/crud/widgets/user.dart';
+import 'package:nadhilah_fb/ui_screen/storage/storage_ctrl.dart';
+import 'package:nadhilah_fb/ui_screen/storage/storage_data.dart';
 
 class UserInput extends StatefulWidget {
   const UserInput({super.key});
@@ -23,22 +26,22 @@ class _UserInputState extends State<UserInput> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextField(
-                controller: ctrlnama,
+                controller: ctrlnamabarang,
                 onChanged: (value) {
                   setState(
                     () {
-                      isShowClearnama = value.isNotEmpty;
+                      isShowClearnamabarang = value.isNotEmpty;
                     },
                   );
                 },
                 decoration: InputDecoration(
-                    suffixIcon: isShowClearnama
+                    suffixIcon: isShowClearnamabarang
                         ? IconButton(
                             onPressed: () {
-                              ctrlnama.clear();
+                              ctrlnamabarang.clear();
                               setState(
                                 () {
-                                  isShowClearnama = false;
+                                  isShowClearnamabarang = false;
                                 },
                               );
                             },
@@ -55,17 +58,17 @@ class _UserInputState extends State<UserInput> {
                 controller: ctrlharga,
                 onChanged: (value) {
                   setState(() {
-                    isShowClearumur = value.isNotEmpty;
+                    isShowClearharga = value.isNotEmpty;
                   });
                 },
                 decoration: InputDecoration(
-                  suffixIcon: isShowClearumur
+                  suffixIcon: isShowClearharga
                       ? IconButton(
                           onPressed: () {
                             ctrlharga.clear();
                             setState(
                               () {
-                                isShowClearumur = false;
+                                isShowClearharga = false;
                               },
                             );
                           },
@@ -93,35 +96,95 @@ class _UserInputState extends State<UserInput> {
                   const SizedBox(
                     width: 10,
                   ),
-                  OutlinedButton(
-                    onPressed: () async {
-                      var valNamaBarang = ctrlnama.text;
-                      var valHarga = int.parse(ctrlharga.text);
-                      final id = UniqueKey().toString();
-                      final newUser = UserX(
-                          id: id, namabarang: valNamaBarang, harga: valHarga, createdAt: DateTime.now().toString());
+                  Column(
+                    children: [
+                      OutlinedButton(
+                        onPressed: () async {
+                          var valNamaBarang = ctrlnamabarang.text;
+                          var valHarga = int.parse(ctrlharga.text);
+                          final id = UniqueKey().toString();
+                          final newUser = UserX(
+                              id: id, namabarang: valNamaBarang, harga: valHarga, createdAt: DateTime.now().toString());
 
-                      // var z = ({'nama': x, 'umur': y});
-                      setState(
-                        () {
-                          isLoading = true;
-                        },
-                      );
-                      await create(newUser);
-                      setState(
-                        () {
-                          isLoading = false;
-                        },
-                      );
-                      ctrlnama.clear();
-                      ctrlharga.clear();
-                      Navigator.pop(context);
+                          // var z = ({'nama': x, 'umur': y});
+                          setState(
+                            () {
+                              isLoading = true;
+                            },
+                          );
+                          await create(newUser);
+                          setState(
+                            () {
+                              isLoading = false;
+                            },
+                          );
+                          ctrlnamabarang.clear();
+                          ctrlharga.clear();
+                          Navigator.pop(context);
 
-                      // debugPrint(x.runtimeType.toString());
-                      // debugPrint(y.runtimeType.toString());
-                    },
-                    child: Text(isLoading ? 'Loading...' : 'Submit'),
-                  )
+                          // debugPrint(x.runtimeType.toString());
+                          // debugPrint(y.runtimeType.toString());
+                        },
+                        child: Text(isLoading ? 'Loading...' : 'Submit'),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      OutlinedButton(
+                        onPressed: () async {
+                          pickImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+                          setState(() {});
+                          // debugPrint(pickImage.toString());
+                          // debugPrint(pickImage!.name);
+                          // debugPrint(pickImage!.mimeType);
+                        },
+                        child: const Text(
+                          "Get Image",
+                        ),
+                      ),
+                      pickImage == null
+                          ? const SizedBox.shrink()
+                          : pickImage == null
+                              ? const SizedBox.shrink()
+                              : SizedBox(
+                                  height: 150,
+                                  width: 150,
+                                  child: Image.network(
+                                    '${pickImage?.path}',
+                                  ),
+                                ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      FutureBuilder(
+                        future: imageUpload == null ? Future.delayed(Duration.zero) : upload(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          }
+                          return OutlinedButton(
+                            onPressed: () async {
+                              imageUpload = pickImage;
+                              // debugPrint(uploadImage.toString());
+                              await upload();
+                              setState(() {});
+                            },
+                            child: const Text(
+                              "Upload Image",
+                            ),
+                          );
+                        },
+                      ),
+                      // Text(imageUrl),
+                      imageUrl.isEmpty
+                          ? const SizedBox.shrink()
+                          : SizedBox(
+                              height: 150,
+                              width: 150,
+                              child: Image.network(imageUrl),
+                            ),
+                    ],
+                  ),
                 ],
               ),
             ],

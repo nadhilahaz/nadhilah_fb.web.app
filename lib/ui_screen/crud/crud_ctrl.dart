@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:nadhilah_fb/models/user.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_data.dart';
-import 'package:nadhilah_fb/ui_screen/crud/widgets/user.dart';
 
 Future<void> create(UserX data) async {
   final dataDetail = data.toMap();

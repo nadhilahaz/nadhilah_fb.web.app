@@ -11,5 +11,6 @@ Future<String> upload() async {
         metaData,
       );
   imageUrl = await uploadImage.ref.getDownloadURL();
+  // imageUrl;
   return uploadImage.toString();
 }
