@@ -47,35 +47,35 @@ class _ListViewUserState extends State<ListViewUser> {
           ),
         ],
       ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return const UserInput();
-                  },
-                ),
-              );
-            },
-            child: const Icon(Icons.add),
-            tooltip: 'Add',
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          FloatingActionButton(
-            onPressed: () {
-              setState(() {});
-            },
-            child: const Icon(Icons.refresh),
-            tooltip: 'Refresh',
-          )
-        ],
-      ),
+      // floatingActionButton: Column(
+      //   mainAxisAlignment: MainAxisAlignment.end,
+      //   children: [
+      //     FloatingActionButton(
+      //       onPressed: () {
+      //         Navigator.push(
+      //           context,
+      //           MaterialPageRoute(
+      //             builder: (context) {
+      //               return const UserInput();
+      //             },
+      //           ),
+      //         );
+      //       },
+      //       child: const Icon(Icons.add),
+      //       tooltip: 'Add',
+      //     ),
+      //     const SizedBox(
+      //       height: 15,
+      //     ),
+      //     FloatingActionButton(
+      //       onPressed: () {
+      //         setState(() {});
+      //       },
+      //       child: const Icon(Icons.refresh),
+      //       tooltip: 'Refresh',
+      //     )
+      //   ],
+      // ),
       body: FutureBuilder(
         future: getcoll(),
         builder: (context, snapshot) {

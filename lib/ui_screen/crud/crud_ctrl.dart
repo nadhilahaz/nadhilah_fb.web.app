@@ -73,7 +73,7 @@ Future<List<UserX>> getcoll() async {
       await FirebaseFirestore.instance
           .collection('namaProduk')
           .orderBy('created_at', descending: true)
-          .limit(3)
+          .limit(5)
           .startAfter([userList.isEmpty ? '9999-99-99' : userList.last.createdAt]).get();
   for (var element in result.docs) {
     users.add(UserX.fromMap(element.data()));
