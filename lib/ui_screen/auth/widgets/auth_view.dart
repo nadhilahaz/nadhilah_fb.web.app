@@ -17,19 +17,19 @@ class AuthView extends StatelessWidget {
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (context, snapshot) => Column(
                 children: [
-                  snapshot.hasData
-                      ? Column(
-                          children: [
-                            Text(snapshot.data!.uid),
-                            Text(snapshot.data!.isAnonymous
-                                ? 'Sign In by Anonim'
-                                : 'Sign In by Email ${snapshot.data!.email}'),
-                          ],
-                        )
-                      : const Text('Login Here'),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  // snapshot.hasData
+                  //     ? Column(
+                  //         children: [
+                  //           Text(snapshot.data!.uid),
+                  //           Text(snapshot.data!.isAnonymous
+                  //               ? 'Sign In by Anonim'
+                  //               : 'Sign In by Email ${snapshot.data!.email}'),
+                  //         ],
+                  //       )
+                  //     : const Text('Login Here'),
+                  // const SizedBox(
+                  //   height: 20,
+                  // ),
                   OutlinedButton(
                     onPressed: snapshot.data == null
                         ? () async {
@@ -59,7 +59,7 @@ class AuthView extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const ListViewAdmin(),
+                                builder: (context) => const ListViewUser(),
                               ),
                             );
                           }
@@ -107,6 +107,7 @@ class AuthView extends StatelessWidget {
                       "Delete Akun",
                     ),
                   ),
+
                   //           await FirebaseAuth.instance.signOut();
                   //         },
                   //   child: const Text(
@@ -134,3 +135,17 @@ class AuthView extends StatelessWidget {
     );
   }
 }
+
+                  // OutlinedButton(
+                  //   onPressed: snapshot.data == null
+                  //       ? null
+                  //       : () async {
+                  //           await FirebaseAuth.instance.signOut();
+                  //         },
+                  //   child: const Text(
+                  //     "Sign Out",
+                  //   ),
+                  // ),
+                  // const SizedBox(
+                  //   height: 20,
+                  // ),

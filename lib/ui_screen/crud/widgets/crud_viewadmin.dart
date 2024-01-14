@@ -3,7 +3,7 @@
 
 import 'dart:math';
 
-import 'package:english_words/english_words.dart';
+// import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:nadhilah_fb/models/user.dart';
 // import 'package:nadhilah_fb/models/user.dart';
@@ -11,6 +11,7 @@ import 'package:nadhilah_fb/ui_screen/crud/crud_ctrl.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_data.dart';
 import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_detail.dart';
 import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_input.dart';
+import 'package:nadhilah_fb/ui_screen/homepage.dart';
 
 class ListViewAdmin extends StatefulWidget {
   const ListViewAdmin({
@@ -26,6 +27,13 @@ class _ListViewAdminState extends State<ListViewAdmin> {
   void initState() {
     loadMore();
     super.initState();
+  }
+
+  void navigateToLoginPage() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => LoginPage()), // Replace LoginPage with your actual login page
+    );
   }
 
   @override
@@ -97,8 +105,8 @@ class _ListViewAdminState extends State<ListViewAdmin> {
                             );
                           },
                           title: Text(data.namabarang),
-                          subtitle: Text('Rp: ${data.harga.toString()}'),
-                          // leading: data.image.isEmpty ? const Text('text') : Image.network(data.image),
+                          // subtitle: Text('Rp: ${data.harga.toString()}'),
+                          // subtitle: Text(data.harga.toString()),
                           leading: Image.network(data.image),
                           // leading: data.image.isEmpty ? const Text('No Image') : Image.network(data.image),
 

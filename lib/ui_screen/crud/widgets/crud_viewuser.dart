@@ -1,9 +1,7 @@
-// import 'package:english_words/english_words.dart';
-// import 'dart:math';
-
 import 'dart:math';
 
-import 'package:english_words/english_words.dart';
+// import 'package:english_words/english_words.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nadhilah_fb/models/user.dart';
 // import 'package:nadhilah_fb/models/user.dart';
@@ -11,6 +9,7 @@ import 'package:nadhilah_fb/ui_screen/crud/crud_ctrl.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_data.dart';
 import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_detail.dart';
 import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_input.dart';
+import 'package:nadhilah_fb/ui_screen/homepage.dart';
 
 class ListViewUser extends StatefulWidget {
   const ListViewUser({
@@ -33,6 +32,20 @@ class _ListViewUserState extends State<ListViewUser> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Daftar Barang'),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              Navigator.of(context).pop(
+                MaterialPageRoute(
+                  builder: (context) => const LoginPage(),
+                ),
+              );
+              await FirebaseAuth.instance.signOut();
+            },
+            icon: const Icon(Icons.exit_to_app),
+            tooltip: 'Log Out App',
+          ),
+        ],
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -49,6 +62,7 @@ class _ListViewUserState extends State<ListViewUser> {
               );
             },
             child: const Icon(Icons.add),
+            tooltip: 'Add',
           ),
           const SizedBox(
             height: 15,
@@ -58,6 +72,7 @@ class _ListViewUserState extends State<ListViewUser> {
               setState(() {});
             },
             child: const Icon(Icons.refresh),
+            tooltip: 'Refresh',
           )
         ],
       ),
@@ -97,7 +112,7 @@ class _ListViewUserState extends State<ListViewUser> {
                             );
                           },
                           title: Text(data.namabarang),
-                          subtitle: Text(data.createdAt),
+                          // subtitle: Text('Rp: ${data.harga.toString()}'),
                           // leading: data.image.isEmpty ? const Text('text') : Image.network(data.image),
                           leading: Image.network(data.image),
                           // leading: data.image.isEmpty ? const Text('No Image') : Image.network(data.image),
@@ -111,6 +126,7 @@ class _ListViewUserState extends State<ListViewUser> {
                                   setState(() {});
                                 },
                                 icon: const Icon(Icons.delete),
+                                tooltip: 'Delete',
                               ),
                               // IconButton(
                               //   onPressed: () async {

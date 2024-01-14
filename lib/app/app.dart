@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 // import 'package:nadhilah_fb/ui_screen/crud/crud_data.dart';
 // import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_input.dart';
 // import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_viewadmin.dart';
-import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_viewuser.dart';
 import 'package:nadhilah_fb/ui_screen/homepage.dart';
 
 class MyApp extends StatelessWidget {

@@ -34,22 +34,22 @@ class UserDetail extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Nama Barang: ${datax.namabarang}'),
-                    Text('Harga: ${datax.harga.toString()}'),
-                    Text('Stok: ${datax.stok.toString()}'),
-                    Text('Tanggal Pembuatan: ${datax.createdAt}'),
                     datax.image.isEmpty
                         ? const SizedBox.shrink()
                         : SizedBox(
                             height: 200,
                             width: 200,
                             child: Image.network(datax.image),
-                          )
+                          ),
+                    Text('Nama Barang: ${datax.namabarang}'),
+                    Text('Harga : Rp ${datax.harga.toString()}'),
+                    Text('Stok: ${datax.stok.toString()}'),
+                    Text('Tanggal Pembuatan: ${datax.createdAt}'),
                   ],
                 ),
               );
             }
-            return const Text('text');
+            return const CircularProgressIndicator();
           },
         ),
       ),
