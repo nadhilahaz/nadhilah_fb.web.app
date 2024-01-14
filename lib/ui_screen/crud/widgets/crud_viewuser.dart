@@ -1,36 +1,29 @@
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:english_words/english_words.dart';
+// import 'dart:math';
+
+import 'dart:math';
+
+import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:nadhilah_fb/models/user.dart';
+// import 'package:nadhilah_fb/models/user.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_ctrl.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_data.dart';
 import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_detail.dart';
-import 'package:nadhilah_fb/ui_screen/homepage.dart';
+import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_input.dart';
 
-class CrudViewUser extends StatefulWidget {
-  const CrudViewUser({
+class ListViewUser extends StatefulWidget {
+  const ListViewUser({
     super.key,
   });
 
   @override
-  State<CrudViewUser> createState() => _CrudViewUserState();
+  State<ListViewUser> createState() => _ListViewUserState();
 }
 
-class _CrudViewUserState extends State<CrudViewUser> {
+class _ListViewUserState extends State<ListViewUser> {
   @override
   void initState() {
-    final x = UserX(
-      createdAt: '9999-99-99',
-      namabarang: 'rinso',
-      id: 'sjhsa',
-      harga: 17,
-    );
-    print(x);
-    // print('hihiw');
-    // final y = x.copyWith(
-    //   umur: 22,
-    //   nama: 'kk',
-    // );
-    // print(y);
     loadMore();
     super.initState();
   }
@@ -40,18 +33,32 @@ class _CrudViewUserState extends State<CrudViewUser> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Daftar Barang'),
-        actions: [
-          IconButton(
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const LoginPage(),
-                  ));
+      ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return const UserInput();
+                  },
+                ),
+              );
             },
-            icon: const Icon(Icons.exit_to_app),
+            child: const Icon(Icons.add),
           ),
+          const SizedBox(
+            height: 15,
+          ),
+          FloatingActionButton(
+            onPressed: () {
+              setState(() {});
+            },
+            child: const Icon(Icons.refresh),
+          )
         ],
       ),
       body: FutureBuilder(
@@ -91,33 +98,40 @@ class _CrudViewUserState extends State<CrudViewUser> {
                           },
                           title: Text(data.namabarang),
                           subtitle: Text(data.createdAt),
-                          trailing: const Row(
+                          // leading: data.image.isEmpty ? const Text('text') : Image.network(data.image),
+                          leading: Image.network(data.image),
+                          // leading: data.image.isEmpty ? const Text('No Image') : Image.network(data.image),
+
+                          trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
+                              IconButton(
+                                onPressed: () async {
+                                  await delete(data);
+                                  setState(() {});
+                                },
+                                icon: const Icon(Icons.delete),
+                              ),
                               // IconButton(
                               //   onPressed: () async {
-                              //     await delete(data);
-                              //     setState(() {});
-                              //   },
-                              //   icon: const Icon(Icons.delete),
-                              // ),
-                              // IconButton(
-                              //   onPressed: () async {
-                              //     final updateUser = data.copyWith(
-                              //       harga: Random().nextInt(100),
-                              //       namabarang: WordPair.random().toString(),
-                              //     );
-                              // final updateUser = UserX(
-                              //   id: id,
-                              // umur: Random().nextInt(100),
-                              // createdAt: data.createdAt,
-                              // nama: WordPair.random().toString(),
-                              // );
-                              //     await update(updateUser);
-                              //     setState(() {});
+                              //     final updateUser = data.copyWith();
+
                               //   },
                               //   icon: const Icon(Icons.loop),
                               // ),
+                              IconButton(
+                                onPressed: () async {
+                                  final updateUser = UserX(
+                                    id: id,
+                                    namabarang: Random().toString(),
+                                    createdAt: data.createdAt,
+                                    // harga: WordPair.random().toString(),
+                                  );
+                                  await update(updateUser);
+                                  setState(() {});
+                                },
+                                icon: const Icon(Icons.loop),
+                              ),
                             ],
                           ),
                         ),

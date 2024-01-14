@@ -1,38 +1,29 @@
 // import 'package:english_words/english_words.dart';
 // import 'dart:math';
 
+import 'dart:math';
+
+import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:nadhilah_fb/models/user.dart';
+// import 'package:nadhilah_fb/models/user.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_ctrl.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_data.dart';
 import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_detail.dart';
 import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_input.dart';
 
-class CrudViewAdmin extends StatefulWidget {
-  const CrudViewAdmin({
+class ListViewAdmin extends StatefulWidget {
+  const ListViewAdmin({
     super.key,
   });
 
   @override
-  State<CrudViewAdmin> createState() => _CrudViewAdminState();
+  State<ListViewAdmin> createState() => _ListViewAdminState();
 }
 
-class _CrudViewAdminState extends State<CrudViewAdmin> {
+class _ListViewAdminState extends State<ListViewAdmin> {
   @override
   void initState() {
-    final x = UserX(
-      createdAt: '9999-99-99',
-      namabarang: 'nad',
-      id: 'sjhsa',
-      harga: 9999,
-    );
-    print(x);
-    // print('hihiw');
-    // final y = x.copyWith(
-    //   umur: 22,
-    //   nama: 'kk',
-    // );
-    // print(y);
     loadMore();
     super.initState();
   }
@@ -106,7 +97,11 @@ class _CrudViewAdminState extends State<CrudViewAdmin> {
                             );
                           },
                           title: Text(data.namabarang),
-                          subtitle: Text(data.createdAt),
+                          subtitle: Text('Rp: ${data.harga.toString()}'),
+                          // leading: data.image.isEmpty ? const Text('text') : Image.network(data.image),
+                          leading: Image.network(data.image),
+                          // leading: data.image.isEmpty ? const Text('No Image') : Image.network(data.image),
+
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -119,29 +114,24 @@ class _CrudViewAdminState extends State<CrudViewAdmin> {
                               ),
                               // IconButton(
                               //   onPressed: () async {
-                              //     final updateUser = data.copyWith(
+                              //     final updateUser = data.copyWith();
 
-                              //     );
                               //   },
                               //   icon: const Icon(Icons.loop),
                               // ),
-                              // IconButton(
-                              //   onPressed: () async {
-                              //     final updateUser = data.copyWith(
-                              //       harga: Random().nextInt(100),
-                              //       namabarang: WordPair.random().toString(),
-                              //     );
-                              //     // final updateUser = UserX(
-                              //     //   id: id,
-                              //     // umur: Random().nextInt(100),
-                              //     // createdAt: data.createdAt,
-                              //     // nama: WordPair.random().toString(),
-                              //     // );
-                              //     await update(updateUser);
-                              //     setState(() {});
-                              //   },
-                              //   icon: const Icon(Icons.loop),
-                              // ),
+                              IconButton(
+                                onPressed: () async {
+                                  final updateUser = UserX(
+                                    id: id,
+                                    namabarang: Random().toString(),
+                                    createdAt: data.createdAt,
+                                    // harga: WordPair.random().toString(),
+                                  );
+                                  await update(updateUser);
+                                  setState(() {});
+                                },
+                                icon: const Icon(Icons.loop),
+                              ),
                             ],
                           ),
                         ),

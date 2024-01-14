@@ -66,13 +66,13 @@ class _StorageViewState extends State<StorageView> {
                 );
               },
             ),
-            Text(imageUrl),
-            imageUrl.isEmpty
+            Text(image),
+            image.isEmpty
                 ? const SizedBox.shrink()
                 : SizedBox(
                     height: 150,
                     width: 150,
-                    child: Image.network(imageUrl),
+                    child: Image.network(image),
                   ),
           ],
         ),

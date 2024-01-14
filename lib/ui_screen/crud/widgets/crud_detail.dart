@@ -1,35 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_ctrl.dart';
+import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_productedit.dart';
+// import 'package:nadhilah_fb/ui_screen/storage/storage_data.dart';
 
 class UserDetail extends StatelessWidget {
-  const UserDetail({super.key, required this.id});
+  const UserDetail({Key? key, required this.id}) : super(key: key);
   final String id;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Detail'),
-        ),
-        body: Center(
-          child: FutureBuilder(
-            future: getDoc(id),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(snapshot.data!.namabarang),
-                      Text(
-                        snapshot.data!.harga.toString(),
-                      ),
-                    ],
-                  ),
-                );
-              }
-              return const Text('text');
+      appBar: AppBar(
+        title: const Text('Detail'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.edit),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => UserEdit(id: id)),
+              );
             },
           ),
-        ));
+        ],
+      ),
+      body: Center(
+        child: FutureBuilder(
+          future: getDoc(id),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              final datax = snapshot.data!;
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Nama Barang: ${datax.namabarang}'),
+                    Text('Harga: ${datax.harga.toString()}'),
+                    Text('Stok: ${datax.stok.toString()}'),
+                    Text('Tanggal Pembuatan: ${datax.createdAt}'),
+                    datax.image.isEmpty
+                        ? const SizedBox.shrink()
+                        : SizedBox(
+                            height: 200,
+                            width: 200,
+                            child: Image.network(datax.image),
+                          )
+                  ],
+                ),
+              );
+            }
+            return const Text('text');
+          },
+        ),
+      ),
+    );
   }
 }

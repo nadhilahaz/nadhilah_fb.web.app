@@ -39,7 +39,7 @@ class AuthView extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const CrudViewUser(),
+                                builder: (context) => const ListViewUser(),
                               ),
                             );
                           }
@@ -59,7 +59,7 @@ class AuthView extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const CrudViewUser(),
+                                builder: (context) => const ListViewAdmin(),
                               ),
                             );
                           }
@@ -68,6 +68,7 @@ class AuthView extends StatelessWidget {
                       "Sign In Anonymus",
                     ),
                   ),
+
                   const SizedBox(
                     height: 20,
                   ),
@@ -80,7 +81,7 @@ class AuthView extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const CrudViewAdmin(),
+                                builder: (context) => const ListViewAdmin(),
                               ),
                             );
                           }
@@ -93,12 +94,6 @@ class AuthView extends StatelessWidget {
                   //   onPressed: snapshot.data == null
                   //       ? null
                   //       : () async {
-                  //           await FirebaseAuth.instance.signOut();
-                  //         },
-                  //   child: const Text(
-                  //     "Sign Out",
-                  //   ),
-                  // ),
                   const SizedBox(
                     height: 20,
                   ),
@@ -112,6 +107,12 @@ class AuthView extends StatelessWidget {
                       "Delete Akun",
                     ),
                   ),
+                  //           await FirebaseAuth.instance.signOut();
+                  //         },
+                  //   child: const Text(
+                  //     "Sign Out",
+                  //   ),
+                  // ),
                 ],
               ),
             ),
