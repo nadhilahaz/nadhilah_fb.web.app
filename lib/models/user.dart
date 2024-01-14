@@ -3,14 +3,14 @@ import 'dart:convert';
 class UserX {
   final String namabarang;
   final String id;
-  final int harga;
+  final int hargaproduk;
   final int stok;
   final String createdAt;
   final String image;
   UserX({
     this.namabarang = '',
     this.id = '',
-    this.harga = 0,
+    this.hargaproduk = 0,
     this.stok = 0,
     this.createdAt = '',
     this.image = '',
@@ -27,7 +27,7 @@ class UserX {
     return UserX(
       namabarang: namabarang ?? this.namabarang,
       id: id ?? this.id,
-      harga: harga ?? this.harga,
+      hargaproduk: harga ?? this.hargaproduk,
       stok: stok ?? this.stok,
       createdAt: createdAt ?? this.createdAt,
       image: image ?? this.image,
@@ -39,7 +39,7 @@ class UserX {
 
     result.addAll({'namabarang': namabarang});
     result.addAll({'id': id});
-    result.addAll({'harga': harga});
+    result.addAll({'harga': hargaproduk});
     result.addAll({'stok': stok});
     result.addAll({'created_at': createdAt});
     result.addAll({'image': image});
@@ -51,7 +51,7 @@ class UserX {
     return UserX(
       namabarang: map['namabarang'] ?? '',
       id: map['id'] ?? '',
-      harga: map['harga']?.toInt() ?? 0,
+      hargaproduk: map['harga']?.toInt() ?? 0,
       stok: map['stok']?.toInt() ?? 0,
       createdAt: map['created_at'] ?? '',
       image: map['image'] ?? '',
@@ -64,7 +64,7 @@ class UserX {
 
   @override
   String toString() {
-    return 'UserX(namabarang: $namabarang, id: $id, harga: $harga, stok: $stok, createdAt: $createdAt, image: $image)';
+    return 'UserX(namabarang: $namabarang, id: $id, harga: $hargaproduk, stok: $stok, createdAt: $createdAt, image: $image)';
   }
 
   @override
@@ -74,7 +74,7 @@ class UserX {
     return other is UserX &&
         other.namabarang == namabarang &&
         other.id == id &&
-        other.harga == harga &&
+        other.hargaproduk == hargaproduk &&
         other.stok == stok &&
         other.createdAt == createdAt &&
         other.image == image;
@@ -82,6 +82,11 @@ class UserX {
 
   @override
   int get hashCode {
-    return namabarang.hashCode ^ id.hashCode ^ harga.hashCode ^ stok.hashCode ^ createdAt.hashCode ^ image.hashCode;
+    return namabarang.hashCode ^
+        id.hashCode ^
+        hargaproduk.hashCode ^
+        stok.hashCode ^
+        createdAt.hashCode ^
+        image.hashCode;
   }
 }

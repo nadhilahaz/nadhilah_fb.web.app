@@ -3,3 +3,4 @@ import 'package:image_picker/image_picker.dart';
 XFile? pickImage;
 XFile? imageUpload;
 var image = '';
+// var harga = '';

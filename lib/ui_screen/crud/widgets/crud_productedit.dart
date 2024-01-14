@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:nadhilah_fb/models/user.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_ctrl.dart';
+import 'package:nadhilah_fb/ui_screen/crud/crud_data.dart';
+import 'package:nadhilah_fb/ui_screen/storage/storage_data.dart';
 
 class UserEdit extends StatefulWidget {
   const UserEdit({Key? key, required this.id}) : super(key: key);
@@ -12,7 +15,6 @@ class UserEdit extends StatefulWidget {
 
 class _UserEditState extends State<UserEdit> {
   late ImagePicker _imagePicker;
-  XFile? pickImage;
 
   @override
   void initState() {
@@ -68,7 +70,7 @@ class _UserEditState extends State<UserEdit> {
                               ),
                               const SizedBox(height: 10),
                               TextField(
-                                controller: TextEditingController(text: data.harga.toString()),
+                                controller: TextEditingController(text: data.hargaproduk.toString()),
                                 decoration: const InputDecoration(
                                   labelText: 'Harga',
                                 ),
@@ -90,11 +92,33 @@ class _UserEditState extends State<UserEdit> {
                       height: 20,
                     ),
                     OutlinedButton(
-                      onPressed: () {
-                        saveData();
+                      onPressed: () async {
+                        final editnamabarang = ctrlnamabarang.text;
+                        final editharga = int.parse(ctrlharga.text);
+                        final editstok = int.parse(ctrlstok.text);
+                        final editcreatedAt = DateTime.now();
+                        final editimage = image;
+                        final id = selectedId;
+
+                        final editproduct = UserX(
+                          namabarang: editnamabarang,
+                          hargaproduk: editharga,
+                          id: id,
+                          stok: editstok,
+                          createdAt: editcreatedAt.toString(),
+                          image: editimage,
+                        );
+                        ctrlnamabarang.clear();
+                        ctrlharga.clear();
+                        ctrlstok.clear();
+
                         Navigator.pop(context);
+                        Navigator.pop(context);
+                        updateproduct(editproduct);
                       },
-                      child: const Text('Simpan Perubahan'),
+                      child: const Text(
+                        "Edit Product",
+                      ),
                     ),
                   ],
                 ),

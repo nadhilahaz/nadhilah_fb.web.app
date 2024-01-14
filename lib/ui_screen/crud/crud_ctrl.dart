@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nadhilah_fb/models/user.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_data.dart';
 import 'package:nadhilah_fb/ui_screen/storage/storage_data.dart';
@@ -8,14 +9,15 @@ Future<void> create(UserX data) async {
   final docId = data.id;
   // var nama = data.nama;
   // final createdAt = data.createdAt;
-  final dataUserName = {
+  final dataBarang = {
     'namabarang': data.namabarang,
     'id': data.id,
     'created_at': data.createdAt,
-    'image': image,
+    'image': data.image,
+    'harga': data.hargaproduk,
   };
 
-  await FirebaseFirestore.instance.collection('namaProduk').doc(docId).set(dataUserName);
+  await FirebaseFirestore.instance.collection('namaProduk').doc(docId).set(dataBarang);
   await FirebaseFirestore.instance.collection('detail').doc(docId).set(dataDetail);
   // final index = userList.indexWhere((element) => element.id == docId);
   userList.insert(0, data);
@@ -114,4 +116,30 @@ Future<void> loadMore() async {
 
 Future<void> saveData() async {
   await Future.delayed(const Duration(seconds: 2));
+}
+
+// void updateProduct(UserX data) async {
+//   final product = data.toMap();
+//   final docId = data.id;
+
+//   await FirebaseFirestore.instance.collection('nama Product').doc(docId).set(product);
+//   final index = userList.indexWhere((element) => element.id == docId);
+//   userList[index] = data;
+// }
+Future<void> updateproduct(UserX data) async {
+  final dataDetail = data.toMap();
+  final docId = data.id;
+  // var nama = data.nama;
+  // final createdAt = data.createdAt;
+  // final dataUserName = {
+  //   'namabarang': data.namabarang,
+  //   'id': data.id,
+  //   'created_at': data.createdAt,
+  //   'image': image,
+  // };
+
+  await FirebaseFirestore.instance.collection('username').doc(docId).set(dataDetail);
+  // await FirebaseFirestore.instance.collection('detail').doc(docId).set(dataDetail);
+  final index = userList.indexWhere((element) => element.id == docId);
+  userList[index] = data;
 }

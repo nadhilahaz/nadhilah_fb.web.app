@@ -5,6 +5,7 @@ final ctrlnamabarang = TextEditingController();
 final ctrlharga = TextEditingController();
 final ctrlimage = TextEditingController();
 final ctrlstok = TextEditingController();
+final ctrlcreatedAt = TextEditingController();
 var isLoading = false;
 var isShowClearnamabarang = false;
 var isShowClearharga = false;

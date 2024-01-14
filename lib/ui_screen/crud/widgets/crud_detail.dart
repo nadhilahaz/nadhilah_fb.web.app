@@ -42,7 +42,7 @@ class UserDetail extends StatelessWidget {
                             child: Image.network(datax.image),
                           ),
                     Text('Nama Barang: ${datax.namabarang}'),
-                    Text('Harga : Rp ${datax.harga.toString()}'),
+                    Text('Harga : Rp ${datax.hargaproduk.toString()}'),
                     Text('Stok: ${datax.stok.toString()}'),
                     Text('Tanggal Pembuatan: ${datax.createdAt}'),
                   ],

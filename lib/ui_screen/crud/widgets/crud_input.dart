@@ -181,7 +181,7 @@ class _UserInputState extends State<UserInput> {
                           final newUser = UserX(
                               id: id,
                               namabarang: valNamaBarang,
-                              harga: valHarga,
+                              hargaproduk: valHarga,
                               stok: valStok,
                               createdAt: DateTime.now().toString(),
                               image: image);

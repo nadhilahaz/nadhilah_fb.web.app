@@ -8,7 +8,6 @@ import 'package:nadhilah_fb/models/user.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_ctrl.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_data.dart';
 import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_detail.dart';
-import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_input.dart';
 import 'package:nadhilah_fb/ui_screen/homepage.dart';
 
 class ListViewUser extends StatefulWidget {
@@ -31,146 +30,107 @@ class _ListViewUserState extends State<ListViewUser> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Daftar Barang'),
+        title: const Text('User List'),
         actions: [
           IconButton(
             onPressed: () async {
-              Navigator.of(context).pop(
-                MaterialPageRoute(
-                  builder: (context) => const LoginPage(),
-                ),
-              );
               await FirebaseAuth.instance.signOut();
+              // ignore: use_build_context_synchronously
+              Navigator.pop(context);
             },
-            icon: const Icon(Icons.exit_to_app),
-            tooltip: 'Log Out App',
+            icon: const Icon(Icons.logout, color: Colors.white),
+            tooltip: 'SignOut',
+          ),
+          IconButton(
+            onPressed: () async {
+              await FirebaseAuth.instance.currentUser!.delete();
+              // ignore: use_build_context_synchronously
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.dangerous_outlined,
+              color: Colors.white,
+            ),
+            tooltip: 'Delete Akun',
           ),
         ],
+        automaticallyImplyLeading: false,
       ),
-      // floatingActionButton: Column(
-      //   mainAxisAlignment: MainAxisAlignment.end,
-      //   children: [
-      //     FloatingActionButton(
-      //       onPressed: () {
-      //         Navigator.push(
-      //           context,
-      //           MaterialPageRoute(
-      //             builder: (context) {
-      //               return const UserInput();
-      //             },
-      //           ),
-      //         );
-      //       },
-      //       child: const Icon(Icons.add),
-      //       tooltip: 'Add',
-      //     ),
-      //     const SizedBox(
-      //       height: 15,
-      //     ),
-      //     FloatingActionButton(
-      //       onPressed: () {
-      //         setState(() {});
-      //       },
-      //       child: const Icon(Icons.refresh),
-      //       tooltip: 'Refresh',
-      //     )
-      //   ],
-      // ),
       body: FutureBuilder(
         future: getcoll(),
         builder: (context, snapshot) {
-          // if (snapshot.connectionState == ConnectionState.waiting) {
-          //   return const Center(child: CircularProgressIndicator());
-          // }
-
-          if (snapshot.hasData) {
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  ...List.generate(
-                    userList.length,
-                    (index) {
-                      final data = userList[index];
-                      final id = data.id;
-                      return Card(
-                        child: ListTile(
-                          selectedTileColor: const Color.fromARGB(255, 54, 31, 5),
-                          selected: selectedId == id,
-                          onTap: () {
-                            setState(
-                              () {
-                                selectedId = id;
-                              },
-                            );
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => UserDetail(
-                                  id: id,
+          return snapshot.hasData
+              ? userList.isEmpty
+                  ? const Center(child: Text('data is empty'))
+                  : SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Center(
+                            child: Wrap(
+                              alignment: WrapAlignment.center,
+                              children: [
+                                ...List.generate(
+                                  userList.length,
+                                  (index) {
+                                    final data = userList[index];
+                                    final id = data.id;
+                                    return GestureDetector(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          height: 200,
+                                          width: 150,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(20),
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              const SizedBox(height: 10),
+                                              SizedBox(width: 100, height: 100, child: Image.network(data.image)),
+                                              const SizedBox(height: 10),
+                                              Text(
+                                                data.namabarang,
+                                                style: const TextStyle(color: Colors.black),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              Text(
+                                                'Rp ${data.hargaproduk.toString()}',
+                                                style: const TextStyle(color: Colors.black),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => UserDetail(id: id)),
+                                        );
+                                      },
+                                    );
+                                  },
                                 ),
-                              ),
-                            );
-                          },
-                          title: Text(data.namabarang),
-                          // subtitle: Text('Rp: ${data.harga.toString()}'),
-                          // leading: data.image.isEmpty ? const Text('text') : Image.network(data.image),
-                          leading: Image.network(data.image),
-                          // leading: data.image.isEmpty ? const Text('No Image') : Image.network(data.image),
-
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(
-                                onPressed: () async {
-                                  await delete(data);
-                                  setState(() {});
-                                },
-                                icon: const Icon(Icons.delete),
-                                tooltip: 'Delete',
-                              ),
-                              // IconButton(
-                              //   onPressed: () async {
-                              //     final updateUser = data.copyWith();
-
-                              //   },
-                              //   icon: const Icon(Icons.loop),
-                              // ),
-                              IconButton(
-                                onPressed: () async {
-                                  final updateUser = UserX(
-                                    id: id,
-                                    namabarang: Random().toString(),
-                                    createdAt: data.createdAt,
-                                    // harga: WordPair.random().toString(),
-                                  );
-                                  await update(updateUser);
-                                  setState(() {});
-                                },
-                                icon: const Icon(Icons.loop),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                  isEnd
-                      ? const Text('End Of List')
-                      : snapshot.connectionState == ConnectionState.waiting
-                          ? const CircularProgressIndicator()
-                          : OutlinedButton(
-                              onPressed: () {
-                                setState(() {
-                                  loadMore();
-                                });
-                              },
-                              child: const Text('Load More'),
-                            )
-                ],
-              ),
-            );
-          }
-          return const Center(child: CircularProgressIndicator());
+                          isEnd
+                              ? const Text('end of product')
+                              : snapshot.connectionState == ConnectionState.waiting
+                                  ? const CircularProgressIndicator()
+                                  : OutlinedButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          loadMore();
+                                        });
+                                      },
+                                      child: const Text('load more'),
+                                    )
+                        ],
+                      ),
+                    )
+              : const Center(child: CircularProgressIndicator());
         },
       ),
     );
