@@ -1,132 +1,164 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:nadhilah_fb/models/user.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_ctrl.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_data.dart';
-import 'package:nadhilah_fb/ui_screen/storage/storage_data.dart';
+import 'package:nadhilah_fb/ui_screen/storage/storage_ctrl.dart';
+import 'package:nadhilah_fb/ui_screen/storage/widgets/storage_view.dart';
 
-class UserEdit extends StatefulWidget {
-  const UserEdit({Key? key, required this.id}) : super(key: key);
+class ProductEdit extends StatefulWidget {
+  const ProductEdit({
+    Key? key,
+    required this.id,
+  }) : super(key: key);
+
   final String id;
 
   @override
-  _UserEditState createState() => _UserEditState();
+  State<ProductEdit> createState() => _ProductEditState();
 }
 
-class _UserEditState extends State<UserEdit> {
-  late ImagePicker _imagePicker;
-
-  @override
-  void initState() {
-    super.initState();
-    _imagePicker = ImagePicker();
-  }
-
+class _ProductEditState extends State<ProductEdit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Detail'),
+        title: const Text('Product Edit'),
       ),
-      body: Center(
-        child: FutureBuilder(
-          future: getDoc(widget.id),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              final data = snapshot.data;
-
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      children: [
-                        pickImage == null
-                            ? const SizedBox.shrink()
-                            : SizedBox(
-                                height: 150,
-                                width: 150,
-                                child: Image.network(
-                                  '${pickImage?.path}',
-                                ),
-                              ),
-                        OutlinedButton(
-                          onPressed: () async {
-                            pickImage = await _imagePicker.pickImage(source: ImageSource.gallery);
-                            setState(() {});
-                          },
-                          child: const Text(
-                            "Pilih Gambar",
-                          ),
-                        ),
-                        Card(
-                          child: Column(
-                            children: [
-                              TextField(
-                                controller: TextEditingController(text: data!.namabarang),
-                                decoration: const InputDecoration(
-                                  labelText: 'Nama Barang',
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              TextField(
-                                controller: TextEditingController(text: data.hargaproduk.toString()),
-                                decoration: const InputDecoration(
-                                  labelText: 'Harga',
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              TextField(
-                                controller: TextEditingController(text: data.stok.toString()),
-                                decoration: const InputDecoration(
-                                  labelText: 'Stok',
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                      ],
+      body: FutureBuilder(
+        future: getDoc(widget.id),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const StorageView(),
+                  const SizedBox(height: 20),
+                  TextField(
+                    controller: editNamaProduk,
+                    onChanged: (value) {
+                      setState(() {
+                        isShowClearnamabarang = value.isNotEmpty;
+                      });
+                    },
+                    decoration: InputDecoration(
+                      hintText: 'Masukkan nama produk',
+                      labelText: 'Nama produk',
+                      suffixIcon: isShowClearnamabarang
+                          ? IconButton(
+                              onPressed: () {
+                                editNamaProduk.clear();
+                                setState(() {
+                                  isShowClearnamabarang = false;
+                                });
+                              },
+                              icon: const Icon(Icons.clear),
+                            )
+                          : null,
+                      focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+                      enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
                     ),
-                    const SizedBox(
-                      height: 20,
+                    keyboardType: TextInputType.text,
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: editHargaProduk,
+                    onChanged: (value) {
+                      setState(() {
+                        isShowClearharga = value.isNotEmpty;
+                      });
+                    },
+                    decoration: InputDecoration(
+                      hintText: 'Contoh: 10000',
+                      labelText: 'Harga produk',
+                      suffixIcon: isShowClearharga
+                          ? IconButton(
+                              onPressed: () {
+                                editHargaProduk.clear();
+                                setState(() {
+                                  isShowClearharga = false;
+                                });
+                              },
+                              icon: const Icon(Icons.clear),
+                            )
+                          : null,
+                      focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+                      enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
                     ),
-                    OutlinedButton(
-                      onPressed: () async {
-                        final editnamabarang = ctrlnamabarang.text;
-                        final editharga = int.parse(ctrlharga.text);
-                        final editstok = int.parse(ctrlstok.text);
-                        final editcreatedAt = DateTime.now();
-                        final editimage = image;
-                        final id = selectedId;
-
-                        final editproduct = UserX(
-                          namabarang: editnamabarang,
-                          hargaproduk: editharga,
-                          id: id,
-                          stok: editstok,
-                          createdAt: editcreatedAt.toString(),
-                          image: editimage,
-                        );
-                        ctrlnamabarang.clear();
-                        ctrlharga.clear();
-                        ctrlstok.clear();
-
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                        updateproduct(editproduct);
-                      },
-                      child: const Text(
-                        "Edit Product",
-                      ),
+                    keyboardType: TextInputType.number,
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: editStokProduk,
+                    onChanged: (value) {
+                      setState(() {
+                        isShowClearstok = value.isNotEmpty;
+                      });
+                    },
+                    decoration: InputDecoration(
+                      hintText: 'Contoh: 1000',
+                      labelText: 'Stok produk',
+                      suffixIcon: isShowClearstok
+                          ? IconButton(
+                              onPressed: () {
+                                editStokProduk.clear();
+                                setState(() {
+                                  isShowClearstok = false;
+                                });
+                              },
+                              icon: const Icon(Icons.clear),
+                            )
+                          : null,
+                      focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+                      enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
                     ),
-                  ],
-                ),
-              );
-            }
-            return const CircularProgressIndicator();
-          },
-        ),
+                    keyboardType: TextInputType.number,
+                  ),
+                  const SizedBox(height: 10),
+                  OutlinedButton(
+                    onPressed: () {},
+                    child: const Text('Edit'),
+                  ),
+                  OutlinedButton(
+                    onPressed: () async {
+                      final id = snapshot.data!.id;
+                      final dwUrl = await upload(id);
+                      final valNama = editNamaProduk.text;
+                      final valHarga = int.parse(editHargaProduk.text);
+                      final valStok = int.parse(editStokProduk.text);
+                      final newProduct = ProductX(
+                        image: dwUrl,
+                        namabarang: valNama,
+                        hargaproduk: valHarga,
+                        id: id,
+                        stok: valStok,
+                        createdAt: DateTime.now().toString(),
+                      );
+                      setState(() {
+                        isLoading = true;
+                      });
+                      await updateProd(newProduct);
+
+                      // Clear controllers after using their values
+                      editNamaProduk.clear();
+                      editHargaProduk.clear();
+                      editStokProduk.clear();
+
+                      setState(() {
+                        isLoading = false;
+                      });
+                      // ignore: use_build_context_synchronously
+                      Navigator.pop(context);
+                    },
+                    child: Text(isLoading ? 'Loading...' : 'Submit'),
+                  )
+                ],
+              ),
+            );
+          }
+          return const Center(child: CircularProgressIndicator());
+        },
       ),
     );
   }

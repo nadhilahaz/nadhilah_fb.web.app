@@ -11,5 +11,10 @@ var isShowClearnamabarang = false;
 var isShowClearharga = false;
 var isShowClearstok = false;
 var selectedId = '';
-List<UserX> userList = [];
+List<ProductX> userList = [];
 var isEnd = false;
+
+final editNamaProduk = TextEditingController();
+final editHargaProduk = TextEditingController();
+final editStokProduk = TextEditingController();
+ProductX? product;

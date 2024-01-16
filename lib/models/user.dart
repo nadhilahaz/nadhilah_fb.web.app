@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-class UserX {
+class ProductX {
   final String namabarang;
   final String id;
   final int hargaproduk;
   final int stok;
   final String createdAt;
   final String image;
-  UserX({
+  ProductX({
     this.namabarang = '',
     this.id = '',
     this.hargaproduk = 0,
@@ -16,7 +16,7 @@ class UserX {
     this.image = '',
   });
 
-  UserX copyWith({
+  ProductX copyWith({
     String? namabarang,
     String? id,
     int? harga,
@@ -24,7 +24,7 @@ class UserX {
     String? createdAt,
     String? image,
   }) {
-    return UserX(
+    return ProductX(
       namabarang: namabarang ?? this.namabarang,
       id: id ?? this.id,
       hargaproduk: harga ?? this.hargaproduk,
@@ -47,8 +47,8 @@ class UserX {
     return result;
   }
 
-  factory UserX.fromMap(Map<String, dynamic> map) {
-    return UserX(
+  factory ProductX.fromMap(Map<String, dynamic> map) {
+    return ProductX(
       namabarang: map['namabarang'] ?? '',
       id: map['id'] ?? '',
       hargaproduk: map['harga']?.toInt() ?? 0,
@@ -60,7 +60,7 @@ class UserX {
 
   String toJson() => json.encode(toMap());
 
-  factory UserX.fromJson(String source) => UserX.fromMap(json.decode(source));
+  factory ProductX.fromJson(String source) => ProductX.fromMap(json.decode(source));
 
   @override
   String toString() {
@@ -71,7 +71,7 @@ class UserX {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is UserX &&
+    return other is ProductX &&
         other.namabarang == namabarang &&
         other.id == id &&
         other.hargaproduk == hargaproduk &&

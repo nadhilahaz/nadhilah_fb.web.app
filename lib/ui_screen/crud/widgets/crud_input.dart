@@ -176,9 +176,9 @@ class _UserInputState extends State<UserInput> {
                               isLoading = true;
                             },
                           );
-                          await upload();
+                          await upload(id);
                           setState(() {});
-                          final newUser = UserX(
+                          final newUser = ProductX(
                               id: id,
                               namabarang: valNamaBarang,
                               hargaproduk: valHarga,

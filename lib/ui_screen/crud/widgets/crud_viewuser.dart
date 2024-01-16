@@ -1,14 +1,10 @@
-import 'dart:math';
-
 // import 'package:english_words/english_words.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:nadhilah_fb/models/user.dart';
 // import 'package:nadhilah_fb/models/user.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_ctrl.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_data.dart';
 import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_detail.dart';
-import 'package:nadhilah_fb/ui_screen/homepage.dart';
 
 class ListViewUser extends StatefulWidget {
   const ListViewUser({
@@ -30,7 +26,7 @@ class _ListViewUserState extends State<ListViewUser> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('User List'),
+        title: const Text('Daftar Barang'),
         actions: [
           IconButton(
             onPressed: () async {

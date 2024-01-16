@@ -17,9 +17,10 @@ class UserDetail extends StatelessWidget {
             icon: const Icon(Icons.edit),
             onPressed: () {
               Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => UserEdit(id: id)),
-              );
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProductEdit(id: id),
+                  ));
             },
           ),
         ],

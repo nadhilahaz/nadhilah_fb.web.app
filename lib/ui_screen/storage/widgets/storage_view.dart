@@ -48,7 +48,7 @@ class _StorageViewState extends State<StorageView> {
               height: 10,
             ),
             FutureBuilder(
-              future: imageUpload == null ? Future.delayed(Duration.zero) : upload(),
+              future: imageUpload == null ? Future.delayed(Duration.zero) : upload(''),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
@@ -57,7 +57,7 @@ class _StorageViewState extends State<StorageView> {
                   onPressed: () async {
                     imageUpload = pickImage;
                     // debugPrint(uploadImage.toString());
-                    await upload();
+                    await upload('');
                     setState(() {});
                   },
                   child: const Text(

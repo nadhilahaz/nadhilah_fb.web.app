@@ -129,13 +129,13 @@ class _ListViewAdminState extends State<ListViewAdmin> {
                               // ),
                               IconButton(
                                 onPressed: () async {
-                                  final updateUser = UserX(
+                                  final updateUser = ProductX(
                                     id: id,
                                     namabarang: Random().toString(),
                                     createdAt: data.createdAt,
                                     // harga: WordPair.random().toString(),
                                   );
-                                  await update(updateUser);
+                                  await updateProd(updateUser);
                                   setState(() {});
                                 },
                                 icon: const Icon(Icons.loop),
