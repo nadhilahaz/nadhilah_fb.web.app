@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_ctrl.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_data.dart';
 import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_detail.dart';
+import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_input.dart';
 
 class ListViewUser extends StatefulWidget {
   const ListViewUser({
@@ -52,6 +53,46 @@ class _ListViewUserState extends State<ListViewUser> {
         ],
         automaticallyImplyLeading: false,
       ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          // FloatingActionButton(
+          //   onPressed: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) {
+          //           return const UserInput();
+          //         },
+          //       ),
+          //     );
+          //   },
+          //   child: const Icon(Icons.add),
+          // ),
+          const SizedBox(
+            height: 15,
+          ),
+          Column(
+            children: [
+              FloatingActionButton(
+                onPressed: () {
+                  setState(() {});
+                },
+                child: const Icon(Icons.refresh),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              FloatingActionButton(
+                onPressed: () {
+                  // setState(() {});
+                },
+                child: const Icon(Icons.shopping_basket),
+              ),
+            ],
+          )
+        ],
+      ),
       body: FutureBuilder(
         future: getcoll(),
         builder: (context, snapshot) {
@@ -77,7 +118,7 @@ class _ListViewUserState extends State<ListViewUser> {
                                           height: 200,
                                           width: 150,
                                           decoration: BoxDecoration(
-                                            color: Colors.white,
+                                            color: const Color.fromARGB(255, 229, 230, 233),
                                             borderRadius: BorderRadius.circular(20),
                                           ),
                                           child: Column(
@@ -85,13 +126,14 @@ class _ListViewUserState extends State<ListViewUser> {
                                               const SizedBox(height: 10),
                                               SizedBox(width: 100, height: 100, child: Image.network(data.image)),
                                               const SizedBox(height: 10),
+                                              // Text(data.namabarang),
                                               Text(
-                                                data.namabarang,
+                                                (data.namabarang),
                                                 style: const TextStyle(color: Colors.black),
                                                 textAlign: TextAlign.center,
                                               ),
                                               Text(
-                                                'Rp ${data.hargaproduk.toString()}',
+                                                'Rp. ${data.hargaproduk.toString()}',
                                                 style: const TextStyle(color: Colors.black),
                                                 textAlign: TextAlign.center,
                                               ),

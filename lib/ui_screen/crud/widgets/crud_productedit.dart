@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:nadhilah_fb/models/user.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_ctrl.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_data.dart';
 import 'package:nadhilah_fb/ui_screen/storage/storage_ctrl.dart';
-import 'package:nadhilah_fb/ui_screen/storage/widgets/storage_view.dart';
+import 'package:nadhilah_fb/ui_screen/storage/storage_data.dart';
 
 class ProductEdit extends StatefulWidget {
   const ProductEdit({
@@ -22,7 +23,7 @@ class _ProductEditState extends State<ProductEdit> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Product Edit'),
+        title: const Text('Edit Produk'),
       ),
       body: FutureBuilder(
         future: getDoc(widget.id),
@@ -33,22 +34,56 @@ class _ProductEditState extends State<ProductEdit> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const StorageView(),
+                  ElevatedButton(
+                    onPressed: () async {
+                      pickImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+                      setState(() {});
+                      // debugPrint(pickImage.toString());
+                      // debugPrint(pickImage!.name);
+                      // debugPrint(pickImage!.mimeType);
+                    },
+                    child: const Text(
+                      "Get Image",
+                    ),
+                  ),
+                  //biar anu pas di pick baru muncul
+                  // pickImage == null ? const SizedBox.shrink() : Text('${pickImage?.path},'),
+                  pickImage == null
+                      ? const SizedBox.shrink()
+                      : const SizedBox(
+                          height: 150,
+                          width: 150,
+                          // child: Image.network(
+                          //   '${pickImage?.path}',
+                          // ),
+                        ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+
+                  // Text(image),
+                  // image.isEmpty
+                  //     ? const SizedBox.shrink()
+                  //     : SizedBox(
+                  //         height: 150,
+                  //         width: 150,
+                  //         child: Image.network(image),
+                  //       ),
                   const SizedBox(height: 20),
                   TextField(
-                    controller: editNamaProduk,
+                    controller: ctrleditNamaProduk,
                     onChanged: (value) {
                       setState(() {
                         isShowClearnamabarang = value.isNotEmpty;
                       });
                     },
                     decoration: InputDecoration(
-                      hintText: 'Masukkan nama produk',
+                      hintText: 'Nama produk',
                       labelText: 'Nama produk',
                       suffixIcon: isShowClearnamabarang
                           ? IconButton(
                               onPressed: () {
-                                editNamaProduk.clear();
+                                ctrleditNamaProduk.clear();
                                 setState(() {
                                   isShowClearnamabarang = false;
                                 });
@@ -56,26 +91,27 @@ class _ProductEditState extends State<ProductEdit> {
                               icon: const Icon(Icons.clear),
                             )
                           : null,
-                      focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
-                      enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+                      focusedBorder:
+                          const OutlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 118, 144, 170))),
+                      enabledBorder:
+                          const OutlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 118, 144, 170))),
                     ),
                     keyboardType: TextInputType.text,
                   ),
                   const SizedBox(height: 10),
                   TextField(
-                    controller: editHargaProduk,
+                    controller: ctrleditHargaProduk,
                     onChanged: (value) {
                       setState(() {
                         isShowClearharga = value.isNotEmpty;
                       });
                     },
                     decoration: InputDecoration(
-                      hintText: 'Contoh: 10000',
                       labelText: 'Harga produk',
                       suffixIcon: isShowClearharga
                           ? IconButton(
                               onPressed: () {
-                                editHargaProduk.clear();
+                                ctrleditHargaProduk.clear();
                                 setState(() {
                                   isShowClearharga = false;
                                 });
@@ -83,26 +119,27 @@ class _ProductEditState extends State<ProductEdit> {
                               icon: const Icon(Icons.clear),
                             )
                           : null,
-                      focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
-                      enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+                      focusedBorder:
+                          const OutlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 118, 144, 170))),
+                      enabledBorder:
+                          const OutlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 118, 144, 170))),
                     ),
                     keyboardType: TextInputType.number,
                   ),
                   const SizedBox(height: 10),
                   TextField(
-                    controller: editStokProduk,
+                    controller: ctrleditStokProduk,
                     onChanged: (value) {
                       setState(() {
                         isShowClearstok = value.isNotEmpty;
                       });
                     },
                     decoration: InputDecoration(
-                      hintText: 'Contoh: 1000',
                       labelText: 'Stok produk',
                       suffixIcon: isShowClearstok
                           ? IconButton(
                               onPressed: () {
-                                editStokProduk.clear();
+                                ctrleditStokProduk.clear();
                                 setState(() {
                                   isShowClearstok = false;
                                 });
@@ -110,25 +147,27 @@ class _ProductEditState extends State<ProductEdit> {
                               icon: const Icon(Icons.clear),
                             )
                           : null,
-                      focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
-                      enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+                      focusedBorder:
+                          const OutlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 118, 144, 170))),
+                      enabledBorder:
+                          const OutlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 118, 144, 170))),
                     ),
                     keyboardType: TextInputType.number,
                   ),
                   const SizedBox(height: 10),
-                  OutlinedButton(
-                    onPressed: () {},
-                    child: const Text('Edit'),
-                  ),
+                  // OutlinedButton(
+                  //   onPressed: () {},
+                  //   child: const Text('Edit'),
+                  // ),
                   OutlinedButton(
                     onPressed: () async {
                       final id = snapshot.data!.id;
-                      final dwUrl = await upload(id);
-                      final valNama = editNamaProduk.text;
-                      final valHarga = int.parse(editHargaProduk.text);
-                      final valStok = int.parse(editStokProduk.text);
+                      final image = await upload(id);
+                      final valNama = ctrleditNamaProduk.text;
+                      final valHarga = int.parse(ctrleditHargaProduk.text);
+                      final valStok = int.parse(ctrleditStokProduk.text);
                       final newProduct = ProductX(
-                        image: dwUrl,
+                        image: image,
                         namabarang: valNama,
                         hargaproduk: valHarga,
                         id: id,
@@ -141,9 +180,9 @@ class _ProductEditState extends State<ProductEdit> {
                       await updateProd(newProduct);
 
                       // Clear controllers after using their values
-                      editNamaProduk.clear();
-                      editHargaProduk.clear();
-                      editStokProduk.clear();
+                      ctrleditNamaProduk.clear();
+                      ctrleditHargaProduk.clear();
+                      ctrleditStokProduk.clear();
 
                       setState(() {
                         isLoading = false;

@@ -14,7 +14,7 @@ var selectedId = '';
 List<ProductX> userList = [];
 var isEnd = false;
 
-final editNamaProduk = TextEditingController();
-final editHargaProduk = TextEditingController();
-final editStokProduk = TextEditingController();
-ProductX? product;
+final ctrleditNamaProduk = TextEditingController();
+final ctrleditHargaProduk = TextEditingController();
+final ctrleditStokProduk = TextEditingController();
+// ProductX? product;

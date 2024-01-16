@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_ctrl.dart';
 import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_productedit.dart';
+// import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_productedit.dart';
 // import 'package:nadhilah_fb/ui_screen/storage/storage_data.dart';
 
 class UserDetail extends StatelessWidget {
@@ -17,10 +18,11 @@ class UserDetail extends StatelessWidget {
             icon: const Icon(Icons.edit),
             onPressed: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ProductEdit(id: id),
-                  ));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProductEdit(id: id),
+                ),
+              );
             },
           ),
         ],

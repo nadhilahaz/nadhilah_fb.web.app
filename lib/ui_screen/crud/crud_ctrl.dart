@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:nadhilah_fb/models/user.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_data.dart';
-import 'package:nadhilah_fb/ui_screen/storage/storage_data.dart';
 
 Future<void> create(ProductX data) async {
   final dataDetail = data.toMap();
@@ -50,24 +49,24 @@ Future<void> create(ProductX data) async {
 
 //   // await FirebaseFirestore.instance.collection('namaProduk').doc(docId).update(databarang);
 //   await FirebaseFirestore.instance.collection('detail').doc(docId).update(dataDetail);
-//   final index = userList.indexWhere((element) => element.id == docId);
-//   userList[index] = newData;
+// final index = userList.indexWhere((element) => element.id == docId);
+// userList[index] = newData;
 // }
 
-Future<void> updateProd(ProductX data) async {
-  final produk = data.toMap();
-  final docId = data.id;
-  final dataBarang = {
-    'namabarang': data.namabarang,
-    'id': data.id,
-    'created_at': data.createdAt,
-    'image': data.image,
-    'harga': data.hargaproduk,
-  };
-  await FirebaseFirestore.instance.collection('namaProduk').doc(docId).set(dataBarang);
-  await FirebaseFirestore.instance.collection('detail').doc(docId).set(produk);
+Future<void> updateProd(ProductX updateProduct) async {
+  final map = updateProduct.toMap();
+  final docId = updateProduct.id;
+  final namabarang = updateProduct.namabarang;
+  final createdAt = updateProduct.createdAt;
+  final image = updateProduct.image;
+  final harga = updateProduct.hargaproduk;
+  await FirebaseFirestore.instance
+      .collection('namaProduk')
+      .doc(docId)
+      .set({'namabarang': namabarang, 'id': docId, 'created_at': createdAt, 'image': image, 'harga': harga});
+  await FirebaseFirestore.instance.collection('detail').doc(docId).set(map);
   final index = userList.indexWhere((element) => element.id == docId);
-  userList[index] = data;
+  userList[index] = updateProduct;
 }
 
 // Future<void> updateProduct(UserX data) async {

@@ -27,6 +27,7 @@ class ProductX {
     return ProductX(
       namabarang: namabarang ?? this.namabarang,
       id: id ?? this.id,
+      // ignore: unnecessary_this
       hargaproduk: harga ?? this.hargaproduk,
       stok: stok ?? this.stok,
       createdAt: createdAt ?? this.createdAt,

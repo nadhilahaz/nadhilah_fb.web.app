@@ -4,6 +4,7 @@
 import 'dart:math';
 
 // import 'package:english_words/english_words.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nadhilah_fb/models/user.dart';
 // import 'package:nadhilah_fb/models/user.dart';
@@ -32,7 +33,7 @@ class _ListViewAdminState extends State<ListViewAdmin> {
   void navigateToLoginPage() {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => LoginPage()), // Replace LoginPage with your actual login page
+      MaterialPageRoute(builder: (context) => const LoginPage()), // Replace LoginPage with your actual login page
     );
   }
 
@@ -41,6 +42,29 @@ class _ListViewAdminState extends State<ListViewAdmin> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Daftar Barang'),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+              // ignore: use_build_context_synchronously
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.logout, color: Colors.white),
+            tooltip: 'SignOut',
+          ),
+          IconButton(
+            onPressed: () async {
+              await FirebaseAuth.instance.currentUser!.delete();
+              // ignore: use_build_context_synchronously
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.dangerous_outlined,
+              color: Colors.white,
+            ),
+            tooltip: 'Delete Akun',
+          ),
+        ],
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -87,7 +111,7 @@ class _ListViewAdminState extends State<ListViewAdmin> {
                       final id = data.id;
                       return Card(
                         child: ListTile(
-                          selectedTileColor: const Color.fromARGB(255, 54, 31, 5),
+                          // selectedTileColor: const Color.fromARGB(255, 54, 31, 5),
                           selected: selectedId == id,
                           onTap: () {
                             setState(
@@ -127,19 +151,19 @@ class _ListViewAdminState extends State<ListViewAdmin> {
                               //   },
                               //   icon: const Icon(Icons.loop),
                               // ),
-                              IconButton(
-                                onPressed: () async {
-                                  final updateUser = ProductX(
-                                    id: id,
-                                    namabarang: Random().toString(),
-                                    createdAt: data.createdAt,
-                                    // harga: WordPair.random().toString(),
-                                  );
-                                  await updateProd(updateUser);
-                                  setState(() {});
-                                },
-                                icon: const Icon(Icons.loop),
-                              ),
+                              // IconButton(
+                              //   onPressed: () async {
+                              //     final updateUser = ProductX(
+                              //       id: id,
+                              //       namabarang: Random().toString(),
+                              //       createdAt: data.createdAt,
+                              //       // harga: WordPair.random().toString(),
+                              //     );
+                              //     await updateProd(updateUser);
+                              //     setState(() {});
+                              //   },
+                              //   icon: const Icon(Icons.loop),
+                              // ),
                             ],
                           ),
                         ),

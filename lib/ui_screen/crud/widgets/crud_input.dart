@@ -170,7 +170,6 @@ class _UserInputState extends State<UserInput> {
                           final id = UniqueKey().toString();
                           // final imageupload = await upload();
 
-                          // var z = ({'nama': x, 'umur': y});
                           setState(
                             () {
                               isLoading = true;
@@ -194,6 +193,7 @@ class _UserInputState extends State<UserInput> {
                           );
                           ctrlnamabarang.clear();
                           ctrlharga.clear();
+                          // ignore: use_build_context_synchronously
                           Navigator.pop(context);
 
                           // debugPrint(x.runtimeType.toString());

@@ -36,6 +36,7 @@ class AuthView extends StatelessWidget {
                             final provider = GoogleAuthProvider().setCustomParameters({'prompt': 'select_account'});
 
                             await FirebaseAuth.instance.signInWithPopup(provider);
+                            // ignore: use_build_context_synchronously
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -56,6 +57,7 @@ class AuthView extends StatelessWidget {
                         ? () async {
                             await FirebaseAuth.instance.signInAnonymously();
                             // Setelah sign-in anonim berhasil, navigasi ke halaman CrudViewUser
+                            // ignore: use_build_context_synchronously
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -78,6 +80,7 @@ class AuthView extends StatelessWidget {
                             final provider = GoogleAuthProvider().setCustomParameters({'prompt': 'select_account'});
 
                             await FirebaseAuth.instance.signInWithPopup(provider);
+                            // ignore: use_build_context_synchronously
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -125,8 +128,8 @@ class AuthView extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
+                fontWeight: FontWeight.w500,
+                color: Color.fromARGB(255, 39, 128, 211),
               ),
             ),
           ],
