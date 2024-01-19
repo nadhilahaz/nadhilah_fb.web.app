@@ -141,8 +141,7 @@ Future<List<ProductX>> getcoll() async {
 
 Future<ProductX> getDoc(String id) async {
   final result = await FirebaseFirestore.instance.collection('detail').doc(id).get();
-  final user = ProductX.fromMap(result.data() ?? {});
-  return user;
+  return useredit = ProductX.fromMap(result.data() ?? {});
 }
 
 // Future<DocumentSnapshot<Map<String, dynamic>>> getDoc(String id) async {
@@ -156,6 +155,8 @@ Future<void> loadMore() async {
     isEnd = true;
   }
 }
+
+
 
 // Future<void> saveData() async {
 //   await Future.delayed(const Duration(seconds: 2));

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_ctrl.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_data.dart';
 import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_detail.dart';
-import 'package:nadhilah_fb/ui_screen/crud/widgets/crud_input.dart';
 
 class ListViewUser extends StatefulWidget {
   const ListViewUser({
@@ -56,19 +55,6 @@ class _ListViewUserState extends State<ListViewUser> {
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          // FloatingActionButton(
-          //   onPressed: () {
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(
-          //         builder: (context) {
-          //           return const UserInput();
-          //         },
-          //       ),
-          //     );
-          //   },
-          //   child: const Icon(Icons.add),
-          // ),
           const SizedBox(
             height: 15,
           ),

@@ -25,15 +25,6 @@ class _UserInputState extends State<UserInput> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Container(
-              //   height: 100,
-              //   width: 100,
-              //   decoration: BoxDecoration(
-              //     border: Border.all(color: Colors.white),
-              //     borderRadius: BorderRadius.circular(20),
-              //     image: Image.network('${}')
-              //   ),
-              // ),
               pickImage == null
                   ? const SizedBox.shrink()
                   : SizedBox(
@@ -43,14 +34,10 @@ class _UserInputState extends State<UserInput> {
                         '${pickImage?.path}',
                       ),
                     ),
-
               OutlinedButton(
                 onPressed: () async {
                   pickImage = await ImagePicker().pickImage(source: ImageSource.gallery);
                   setState(() {});
-                  // debugPrint(pickImage.toString());
-                  // debugPrint(pickImage!.name);
-                  // debugPrint(pickImage!.mimeType);
                 },
                 child: const Text(
                   "Get Image",

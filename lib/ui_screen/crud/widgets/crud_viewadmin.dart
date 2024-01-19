@@ -1,12 +1,6 @@
 // import 'package:english_words/english_words.dart';
-// import 'dart:math';
-
-import 'dart:math';
-
-// import 'package:english_words/english_words.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:nadhilah_fb/models/user.dart';
 // import 'package:nadhilah_fb/models/user.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_ctrl.dart';
 import 'package:nadhilah_fb/ui_screen/crud/crud_data.dart';

@@ -12,9 +12,11 @@ var isShowClearharga = false;
 var isShowClearstok = false;
 var selectedId = '';
 List<ProductX> userList = [];
+ProductX? useredit;
 var isEnd = false;
 
 final ctrleditNamaProduk = TextEditingController();
 final ctrleditHargaProduk = TextEditingController();
 final ctrleditStokProduk = TextEditingController();
 // ProductX? product;
+

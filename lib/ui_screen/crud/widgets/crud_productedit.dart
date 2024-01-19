@@ -20,6 +20,15 @@ class ProductEdit extends StatefulWidget {
 
 class _ProductEditState extends State<ProductEdit> {
   @override
+  void initState() {
+    super.initState();
+
+    ctrleditNamaProduk.text = useredit!.namabarang;
+    ctrleditHargaProduk.text = useredit!.hargaproduk.toString();
+    ctrleditStokProduk.text = useredit!.stok.toString();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -38,24 +47,24 @@ class _ProductEditState extends State<ProductEdit> {
                     onPressed: () async {
                       pickImage = await ImagePicker().pickImage(source: ImageSource.gallery);
                       setState(() {});
-                      // debugPrint(pickImage.toString());
-                      // debugPrint(pickImage!.name);
-                      // debugPrint(pickImage!.mimeType);
                     },
                     child: const Text(
                       "Get Image",
                     ),
                   ),
-                  //biar anu pas di pick baru muncul
-                  // pickImage == null ? const SizedBox.shrink() : Text('${pickImage?.path},'),
+
                   pickImage == null
-                      ? const SizedBox.shrink()
-                      : const SizedBox(
+                      ? SizedBox(
                           height: 150,
                           width: 150,
-                          // child: Image.network(
-                          //   '${pickImage?.path}',
-                          // ),
+                          child: Image.network(useredit!.image),
+                        )
+                      : SizedBox(
+                          height: 150,
+                          width: 150,
+                          child: Image.network(
+                            pickImage!.path,
+                          ),
                         ),
                   const SizedBox(
                     height: 10,
@@ -155,10 +164,7 @@ class _ProductEditState extends State<ProductEdit> {
                     keyboardType: TextInputType.number,
                   ),
                   const SizedBox(height: 10),
-                  // OutlinedButton(
-                  //   onPressed: () {},
-                  //   child: const Text('Edit'),
-                  // ),
+
                   OutlinedButton(
                     onPressed: () async {
                       final id = snapshot.data!.id;
